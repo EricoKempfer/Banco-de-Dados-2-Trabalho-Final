@@ -1,0 +1,36 @@
+# Modelagem e Comandos Redis para Integração das Bases
+# 1. Limpar banco para atualização (Requisito do teste)
+FLUSHDB
+
+# 2. Inserir Dados do Cliente (Bernardo) - Junção SQL + Mongo
+HSET cliente:1 id "1" nome "Bernardo" cpf "000.000.000-00" interesses "Tecnologia, Games"
+SADD todos:clientes "1"
+
+# 3. Inserir Amigos (Bernardo é amigo do João) - Origem Neo4j
+RPUSH cliente:1:amigos "João (ID: 2)"
+
+# 4. Inserir Compras Realizadas - Origem SQL
+RPUSH cliente:1:compras "Mouse Gamer - R$150.00 - Data: 2025-10-01"
+
+# 5. Inserir Recomendações
+# (A API detectou que o João comprou um Teclado e o Bernardo gosta de Tecnologia)
+RPUSH cliente:1:recomendacoes "Teclado Mecânico (Porque seu amigo João comprou)"
+
+# 6. Consultas Obrigatórias
+# Consulta A: Mostrar os dados de todos os clientes
+SMEMBERS todos:clientes
+HGETALL cliente:1
+
+# Consulta B: Mostrar os dados dos clientes e seus amigos
+HGETALL cliente:1
+LRANGE cliente:1:amigos 0 -1
+
+# Consulta C: Mostrar os dados dos clientes e as compras realizadas
+HGETALL cliente:1
+LRANGE cliente:1:compras 0 -1
+
+# Consulta D: Listar os dados dos amigos dos clientes e as possíveis recomendações
+LRANGE cliente:1:amigos 0 -1
+LRANGE cliente:1:recomendacoes 0 -1
+
+# Observação: Para múltiplos clientes, repita os comandos alterando o ID.
