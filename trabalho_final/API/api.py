@@ -33,7 +33,7 @@ except:
 
 
 # ==============================================================================
-#  ÁREA 0: PREPARAÇÃO (Para facilitar sua apresentação)
+#  ÁREA 0: PREPARAÇÃO (Para facilitar a apresentação)
 # ==============================================================================
 
 @app.post("/setup/popular-mongodb")
