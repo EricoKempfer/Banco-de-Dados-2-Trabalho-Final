@@ -1,0 +1,13 @@
+FLUSHDB
+HSET cliente:1 id "1" nome "Bernardo" cpf "000.000.000-00" interesses "Tecnologia, Games"
+SADD todos:clientes "1"
+RPUSH cliente:1:amigos "João (ID: 2)"
+RPUSH cliente:1:compras "Mouse Gamer - R$150.00 - Data: 2025-10-01"
+RPUSH cliente:1:recomendacoes "Teclado Mecânico (Porque seu amigo João comprou)"
+# Consultas obrigatórias
+SMEMBERS todos:clientes
+HGETALL cliente:1
+LRANGE cliente:1:amigos 0 -1
+LRANGE cliente:1:compras 0 -1
+LRANGE cliente:1:recomendacoes 0 -1
+# Para múltiplos clientes, repita os comandos alterando o ID.
